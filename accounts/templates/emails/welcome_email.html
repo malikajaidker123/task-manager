@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome to Task Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background-color: #4a6fa5;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px 5px 0 0;
+        }
+        .content {
+            padding: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-radius: 0 0 5px 5px;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 20px 0;
+            background-color: #4a6fa5;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 0.8em;
+            color: #777;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Welcome to {{ site_name }}!</h1>
+    </div>
+    
+    <div class="content">
+        <p>Hello {{ user.first_name|default:user.email }},</p>
+        
+        <p>Thank you for registering with {{ site_name }}. We're excited to have you on board!</p>
+        
+        <p>With {{ site_name }}, you can:</p>
+        <ul>
+            <li>Create and manage your tasks</li>
+            <li>Set due dates and priorities</li>
+            <li>Organize your work efficiently</li>
+        </ul>
+        
+        <p>Get started by logging in to your account and creating your first task!</p>
+        
+        <div style="text-align: center;">
+            <a href="{{ site_url }}" class="button">Go to {{ site_name }}</a>
+        </div>
+        
+        <p>If you have any questions, feel free to reply to this email.</p>
+        
+        <p>Best regards,<br>The {{ site_name }} Team</p>
+    </div>
+    
+    <div class="footer">
+        <p>&copy; {% now "Y" %} {{ site_name }}. All rights reserved.</p>
+        <p>You're receiving this email because you created an account with {{ site_name }}.</p>
+    </div>
+</body>
+</html>

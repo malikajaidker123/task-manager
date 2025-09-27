@@ -1,6 +1,4 @@
-# r-ztm-f-d
-
-# Title: Task Manager API
+Task Manager API
 
 ## Objective:
 Build a RESTful API for a simple task manager application using either Flask or Django. The API should allow users to perform basic CRUD operations on tasks and should include user authentication.

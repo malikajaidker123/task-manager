@@ -8,9 +8,7 @@ from .models import Task
 from .serializers import TaskSerializer
 
 class TaskViewSet(viewsets.ModelViewSet):
-    """
-    ViewSet for viewing and editing tasks.
-    """
+    # ViewSet for viewing and editing tasks.
     serializer_class = TaskSerializer
     permission_classes = [IsAuthenticated]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
@@ -20,23 +18,29 @@ class TaskViewSet(viewsets.ModelViewSet):
     ordering = ['-created_at']
 
     def get_queryset(self):
-        # """
-        # This view returns a list of all the tasks
-        # for the currently authenticated user.
-        # ""
+        # This view returns a list of all the tasks for the currently authenticated user.
         return Task.objects.filter(owner=self.request.user)
 
+
+
     def perform_create(self, serializer):
-        # ""
         # The owner is automatically set to the current user when creating a task.
-        # ""
         serializer.save(owner=self.request.user)
+
+
+    def destroy(self, request, *args, **kwargs):
+        # Return a clearer error when the task is not found on DELETE.
+        try:
+            instance = self.get_object()
+        except Exception as e:
+            return Response({"detail": f"Task with id {kwargs.get('pk')} not found"}, status=status.HTTP_404_NOT_FOUND)
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 
     @action(detail=True, methods=['post'])
     def toggle_complete(self, request, pk=None):
-        # ""
         # Custom action to toggle the completed status of a task.
-        # ""
         task = self.get_object()
         task.completed = not task.completed
         task.save()
